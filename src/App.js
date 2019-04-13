@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
+import {BrowserRouter as Router, Route, NavLink, withRouter} from 'react-router-dom';
 
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Profile from './components/Profile'
 
 class App extends Component {
   constructor(props) {
@@ -27,16 +28,21 @@ class App extends Component {
         WELCOME TO DEBT-DRAGON!
         <>
           <Router>
-            <nav>
-              <NavLink to="/login">Login</NavLink>
-              {" "}
+            <div>
+              {this.state.userExists ?
+              <NavLink to="/profile">Profile</NavLink>
+              :
+              <>
               <NavLink to="/signup">SignUp</NavLink>
-            </nav>
-
-            <Route path="/login" component={Login}/>
-            <Route path="/signup" component={SignUp}/>
-
-
+              <NavLink to="/login">Login</NavLink>
+              </>
+              }
+              <div>
+              <Route path="/signup" component={SignUp}/>
+              <Route path="/login" component={Login}/>
+              <Route path="/profile" component={Profile}/>
+              </div>
+            </div>
           </Router>
         </>
       </div>
