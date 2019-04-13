@@ -1,0 +1,65 @@
+{
+    "users": [
+        {
+        "firstName": "John",
+        "lastName": "Smith",
+        "username": "Jsmith19",
+        "debts": [
+            {
+                "type": "school",
+                "amount": 4000,
+                "interestRate": 0.15,
+                "minimumPayment": 40,
+                "paymentOptions": {
+                    "snowBall": 40,
+                    "avalanche": 100,
+                    "creditScore": 140
+                }
+            }
+        ],
+        "expenses": 700,
+        "income": 2500,
+        "selectedPlan": null
+    },
+    {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "username": "JaneyJo",
+        "debts": [
+            {
+                "type": "car",
+                "amount": 3000,
+                "interestRate": 0.2,
+                "paymentOptions": {
+                    "snowBall": 40,
+                    "avalanche": 100,
+                    "creditScore": 140
+                }
+            },
+            {
+                "type": "personal",
+                "amount": 400,
+                "interestRate": 0.0,
+                "paymentOptions": {
+                    "snowBall": 40,
+                    "avalanche": 100,
+                    "creditScore": 140
+                }
+            },
+            {
+                "type": "mortgage",
+                "amount": 1500,
+                "interestRate": 0.4,
+                "paymentOptions": {
+                    "snowBall": 40,
+                    "avalanche": 100,
+                    "creditScore": 140
+                }
+            }
+        ],
+        "expenses": 900,
+        "income": 5000, 
+        "selectedPlan": null
+    }
+    ]
+}
