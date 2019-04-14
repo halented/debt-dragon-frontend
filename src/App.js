@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 
 import SignUp from './components/SignUp'
 import Login from './components/Login'
-import Profile from './components/Profile'
+import PlanContainer from './components/PlanContainer'
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class App extends Component {
       debts: [],
       expenses: 0,
       income: "",
+      planOptions: {},
       selectedPlan: null,
       numberOfDebts: 1,
       user_id: 0
@@ -96,6 +97,7 @@ class App extends Component {
             username: json.username
           })
         ).then(() => this.createDebt())
+        .then(this.postingPlans())
   }
 
   createDebt = () => {
@@ -116,6 +118,21 @@ class App extends Component {
       })
     })
   }
+
+  postingPlans = () => {
+    fetch("//localhost:3000/selectPlan?id=9", {
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({user_id: this.state.user_id})
+    }
+    )
+    .then(response => response.json())
+    .then(json => 
+    this.setState({planOptions: json})
+    )}
 
   onChange(ev) {
 
@@ -160,21 +177,20 @@ class App extends Component {
           <Router>
             <div>
               {this.state.userExists ?
-                <NavLink to="/profile">Profile</NavLink>
+                <PlanContainer user={this.state}/>
                 :
                 <>
                   <NavLink to="/signup">SignUp</NavLink>
                   <NavLink to="/login">Login</NavLink>
-                </>
-              }
-              <div>
-              <Route path="/login" render={(props) => (<Login {...props} onLogIn={this.onLogIn}/>)}/>
-              <Route path="/profile" component={Profile}/>
-              <Route path="/signup" render={(props) => (
-                <SignUp {...props} onChange={this.onChange} state={this.state} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>
-              )} />
-
+                <div>
+                <Route path="/login" render={(props) => (<Login {...props} onLogIn={this.onLogIn}/>)}/>
+                {/* <Route path="/profile" component={Profile}/> */}
+                <Route path="/signup" render={(props) => (
+                  <SignUp {...props} onChange={this.onChange} state={this.state} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>
+                )} />
               </div>
+               </>
+              }
             </div>
           </Router>
         </>
