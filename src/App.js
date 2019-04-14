@@ -67,10 +67,54 @@ class App extends Component {
       firstName: firstName.value,
       lastName: lastName.value,
       username: username.value,
-      income: income,
+      income: income.value,
       expenses: total,
-      });
+    }, () => this.signUp());
 
+  }
+
+  signUp = () => {
+    fetch("//localhost:3000/users", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        first_name: this.state.firstName,
+        last_name: this.state.lastName,
+        username: this.state.username,
+        income: this.state.income,
+        expenses: this.state.expenses
+      })
+    })
+    .then(resp => resp.json())
+      .then(json =>
+          this.setState({
+            user_id: json.id,
+            userExists: true,
+            username: json.username
+          })
+        ).then(() => this.createDebt())
+  }
+
+  createDebt = () => {
+    this.state.debts.map( debt => {
+      fetch("//localhost:3000/debts", {
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          debt_type: debt.type,
+          amount: debt.amount,
+          interest_rate: debt.interest,
+          user_id: this.state.user_id,
+          min_payment: debt.minimumPayment
+        })
+      })
+    })
   }
 
   onChange(ev) {
@@ -100,7 +144,8 @@ class App extends Component {
         } else {
           this.setState({
             user_id: json.id,
-            userExists: true
+            userExists: true,
+            username: json.username
           })
         }
       }

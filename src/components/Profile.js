@@ -4,7 +4,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                Hello, {this.props.state.firstName}!
+                Hello, {this.props.firstName}!
             </div>
         );
     }
