@@ -19,6 +19,7 @@ class App extends Component {
       expenses: 0,
       income: "",
       selectedPlan: null,
+      planOptions: {},
       numberOfDebts: 1,
       user_id: 0
     }
@@ -69,37 +70,36 @@ class App extends Component {
       username: username.value,
       income: income.value,
       expenses: total,
-    }, () => this.signUp());
-
+    }, () => {this.sendInfoAndPost()});
+      console.log("BEFORE RENDER")
+      this.renderSelectPage()
   }
 
-  signUp = () => {
-    fetch("//localhost:3000/users", {
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
+  sendInfoAndPost(){
+    console.log("hi")
+    fetch(`//localhost:3000/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        first_name: this.state.firstName,
-        last_name: this.state.lastName,
+        debts: this.state.debts,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
         username: this.state.username,
         income: this.state.income,
-        expenses: this.state.expenses
+        expenses: this.state.expenses,
       })
-    })
-    .then(resp => resp.json())
-      .then(json =>
-          this.setState({
-            user_id: json.id,
-            userExists: true,
-            username: json.username
-          })
-        ).then(() => this.createDebt())
+    }).then(res => res.json())
+    .then(json => {
+      this.setState({
+        user_id: json.id,
+        userExists: true,
+        username: json.username
+      }, () => this.createDebt())}
+    )
   }
 
   createDebt = () => {
-    this.state.debts.map( debt => {
+    this.state.debts.map(debt => {
       fetch("//localhost:3000/debts", {
         method: "POST",
         headers:{
@@ -113,8 +113,34 @@ class App extends Component {
           user_id: this.state.user_id,
           min_payment: debt.minimumPayment
         })
+      }).then(res => res.json())
+      .then(json => {
+        console.log("JSON: ", json.user_id);
+        this.postingPlans(json.user_id)
       })
-    })
+    });
+    console.log("DONE!!!")
+  }
+
+  postingPlans = (userId) => {
+    fetch(`//localhost:3000/selectPlan?user_id=${userId}`, {
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({user_id: userId})
+    }
+    )
+    .then(response => response.json())
+    .then(json => {
+      console.log("BITCHIN: ", json);
+      this.setState({planOptions: json})
+    }
+    )}
+
+  renderSelectPage(){
+    console.log("fucking hell")
   }
 
   onChange(ev) {
@@ -130,22 +156,22 @@ class App extends Component {
   }
 
   onLogIn = (event, username) => {
-    event.preventDefault()
-    fetch(`//localhost:3000/login`, {
+    event.preventDefault(event)
+    fetch(`localhost:3000/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: username
       })
-    }).then(resp => resp.json())
+    })
       .then(json => {
         if (json.status === 400) {
           return
         } else {
+          console.log("HERE!!!")
           this.setState({
             user_id: json.id,
-            userExists: true,
-            username: json.username
+            userExists: true
           })
         }
       }
@@ -168,12 +194,13 @@ class App extends Component {
                 </>
               }
               <div>
-              <Route path="/login" render={(props) => (<Login {...props} onLogIn={this.onLogIn}/>)}/>
-              <Route path="/profile" component={Profile}/>
+              <Route path="/login" component={Login}/>
+              <Route path="/profile" render={(props) => (
+                <Profile {...props} state={this.state}/>
+              )} />
               <Route path="/signup" render={(props) => (
                 <SignUp {...props} onChange={this.onChange} state={this.state} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>
               )} />
-
               </div>
             </div>
           </Router>
