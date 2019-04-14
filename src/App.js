@@ -7,6 +7,7 @@ import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import SelectionPage from './components/SelectionPage'
+import Dragon from './components/DragonDebt.png'
 
 class App extends Component {
   constructor(props) {
@@ -182,7 +183,10 @@ class App extends Component {
   render() {
     return (
       <div className="App" >
-        WELCOME TO DEBT- DRAGON!
+        <>
+        <img src={Dragon} className="drago"/>
+        <h1>WELCOME TO DEBT- DRAGON!</h1>
+        </>
         <>
           <Router>
             <div>
@@ -191,6 +195,7 @@ class App extends Component {
                 :
                 <>
                   <NavLink to="/signup">SignUp</NavLink>
+                  {" / "}
                   <NavLink to="/login">Login</NavLink>
                 </>
               }
@@ -205,7 +210,10 @@ class App extends Component {
               </div>
             </div>
           </Router>
-          
+          {(this.state.userExists && this.state.selectedPlan === null)
+            ?
+              (<SelectionPage state={this.state} planOptions={this.state.planOptions}/>): null
+          }
         </>
       </div >
     );

@@ -6,7 +6,6 @@ class SelectionPage extends Component {
     return (
       <div>
         GOOD MORNING, {this.props.state.firstName}!!!
-        amount: {this.props.planOptions ? this.props.planOptions["avalanche"][0].amount : null},
 
       </div>
     );
