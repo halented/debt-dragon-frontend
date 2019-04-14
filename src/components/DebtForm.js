@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
 class DebtForm extends Component {
-  constructor(props){
-    super(props)
-  }
 
   render() {
     return (
-      <div className="new-debt-box">
+      <div className="new-debt-box" id={this.props.usable}>
             <label>Type:</label><br/>
             <select>
               <option value="studentLoan">Student Loan</option>

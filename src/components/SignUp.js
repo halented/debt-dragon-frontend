@@ -11,11 +11,14 @@ class SignUp extends Component {
   }
 
   renderDebtForms(number){
-    console.log("YOYOYOYO")
-    let array = [1, 2, 3, 4, 5]
-    return (array.map(item => {
-        return <DebtForm />
-    }));
+    let temp = []
+    for(let i=0; i<number; i++){
+      temp.push("ha")
+    };
+    return(
+      temp.map((ha, index) => {
+        return <DebtForm key={index} usable={index}/>}
+    ))
   }
 
   render() {
@@ -44,8 +47,7 @@ class SignUp extends Component {
             <input type="text"></input><br/>
           </div>
           <br/><button onClick={(ev) => this.props.addNewDebt(ev)}>Add Debt</button><br/>
-          <DebtForm />
-          <DebtForm />
+
 
           {this.renderDebtForms(this.props.numberOfDebts)}
 

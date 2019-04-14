@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import {BrowserRouter as Router, Route, NavLink, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
 
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Profile from './components/Profile'
-import DebtForm from './components/DebtForm'
 
 class App extends Component {
   constructor(props) {
@@ -20,9 +19,10 @@ class App extends Component {
       expenses: 0,
       income: 0,
       selectedPlan: null,
-      numberOfDebts: 3
+      numberOfDebts: 1
     }
     this.addNewDebt = this.addNewDebt.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   addNewDebt(ev){
@@ -33,7 +33,20 @@ class App extends Component {
 
   handleSubmit(ev){
     ev.preventDefault()
-    console.log("inside submit")
+    let tempArr = []
+    for(let i=0; i < this.state.numberOfDebts; i++){
+      let obj = {}
+    let typ = document.getElementById(i).children[2].value
+    let amt = document.getElementById(i).children[6].value
+    let int = document.getElementById(i).children[10].value
+    let minpay = document.getElementById(i).children[14].value
+      obj['type'] = typ
+      obj['amount'] = amt
+      obj['interest'] = int
+      obj['minimumPayment'] = minpay
+      tempArr.push(obj)
+    }
+    console.log(tempArr)
   }
 
   render() {
