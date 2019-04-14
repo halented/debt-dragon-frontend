@@ -45,8 +45,6 @@ class SignUp extends Component {
   render() {
     return (
       <div>
-      SIGN UP!!!!!!
-      <br/>
       <br/>
         <form onSubmit={(ev) => this.props.handleSubmit(ev)}>
           <label>First Name:</label><br/>
@@ -60,7 +58,6 @@ class SignUp extends Component {
           <div className="monthly-expenses-box">
             <label>Rent:</label><br/>
             <input type="text" id="rent" name="rent" value={this.state.rent} onChange={(ev) => this.onExpensesChange(ev)} onSubmit={(ev) => this.updateExpenses(ev)}></input><br/>
-            <p>(If you own a home and pay mortgage, please account for this in the "Debts" section.)</p>
             <label>Utilities:</label><br/>
             <input type="text" id="utilities" name="utilities" value={this.state.utilities} onChange={(ev) => this.onExpensesChange(ev)} onSubmit={(ev) => this.updateExpenses(ev)}></input><br/>
             <label>Food/Entertainment:</label><br/>
