@@ -5,10 +5,11 @@ import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
 
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Debt from './components/Debt'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       userExists: false,
       firstName: "",
@@ -20,6 +21,17 @@ class App extends Component {
       selectedPlan: null,
     }
   }
+
+  addNewDebt(ev){
+    ev.preventDefault()
+    console.log("ADDING A NEW DEBT")
+  }
+
+  handleSubmit(ev){
+    ev.preventDefault()
+    console.log("inside submit")
+  }
+
 
   render() {
     return (
@@ -34,8 +46,9 @@ class App extends Component {
             </nav>
 
             <Route path="/login" component={Login}/>
-            <Route path="/signup" component={SignUp}/>
-
+            <Route path="/signup" render={(props) => (
+              <SignUp {...props} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit}/>
+            )} />
 
           </Router>
         </>
