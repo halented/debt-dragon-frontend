@@ -86,14 +86,14 @@ class App extends Component {
   }
 
   onLogIn = (event, username) => {
-    event.preventDefault(event)
-    fetch(`localhost:3000/users`, {
+    event.preventDefault()
+    fetch(`//localhost:3000/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: username
       })
-    })
+    }).then(resp => resp.json())
       .then(json => {
         if (json.status === 400) {
           return
@@ -123,7 +123,7 @@ class App extends Component {
                 </>
               }
               <div>
-              <Route path="/login" component={Login}/>
+              <Route path="/login" render={(props) => (<Login {...props} onLogIn={this.onLogIn}/>)}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/signup" render={(props) => (
                 <SignUp {...props} onChange={this.onChange} state={this.state} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>

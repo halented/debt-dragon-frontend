@@ -9,7 +9,7 @@ class Login extends Component {
   }
 
 
-  onChange = () => {
+  onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
@@ -19,10 +19,10 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <form onChange={(event) => this.handleChange(event)} onSubmit={(event) => this.props.onLogIn(event, this.state)}>
+        <form onChange={(event) => this.onChange(event)} onSubmit={(event) => {this.props.onLogIn(event, this.state.username)}}>
           <label>Username: </label>
           <input name="username" value={this.state.username} />
-          <input name="submit" value="Submit" />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     );
