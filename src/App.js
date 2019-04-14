@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Profile from './components/Profile'
+import SelectionPage from './components/SelectionPage'
 
 class App extends Component {
   constructor(props) {
@@ -204,6 +205,7 @@ class App extends Component {
               </div>
             </div>
           </Router>
+          
         </>
       </div >
     );
