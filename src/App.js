@@ -22,6 +22,16 @@ class App extends Component {
     }
   }
 
+  addNewDebt(ev){
+    ev.preventDefault()
+    console.log("ADDING A NEW DEBT")
+  }
+
+  handleSubmit(ev){
+    ev.preventDefault()
+    console.log("inside submit")
+  }
+
   render() {
     return (
       <div className="App">
@@ -38,9 +48,11 @@ class App extends Component {
               </>
               }
               <div>
-              <Route path="/signup" component={SignUp}/>
               <Route path="/login" component={Login}/>
               <Route path="/profile" component={Profile}/>
+              <Route path="/signup" render={(props) => (
+                <SignUp {...props} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit}/>
+              )} />
               </div>
             </div>
           </Router>
