@@ -6,8 +6,17 @@ class SignUp extends Component {
     super(props)
 
     this.state= {
-
+      rent: "",
+      utilities: "",
+      foodEntertainment: "",
+      other: ""
     }
+
+    this.updateExpenses = this.updateExpenses.bind(this)
+  }
+
+  updateExpenses(ev){
+    console.log("Updating expenses")
   }
 
   renderDebtForms(number){
@@ -21,6 +30,18 @@ class SignUp extends Component {
     ))
   }
 
+  onExpensesChange(ev) {
+
+    let key = ev.target.name;
+    let value = ev.target.value;
+
+    let state = {}
+    state[key] = value
+
+    console.log('single controlled state', state)
+    this.setState(state)
+  }
+
   render() {
     return (
       <div>
@@ -29,22 +50,23 @@ class SignUp extends Component {
       <br/>
         <form onSubmit={(ev) => this.props.handleSubmit(ev)}>
           <label>First Name:</label><br/>
-          <input type="text"></input><br/>
+          <input type="text" id="firstName" name="firstName" value={this.props.state.firstName} onChange={(ev) => this.props.onChange(ev)}></input><br/>
           <label>Last Name:</label><br/>
-          <input type="text"></input><br/>
+          <input type="text" id="lastName" name="lastName" value={this.props.state.lastName} onChange={(ev) => this.props.onChange(ev)}></input><br/>
           <label>User Name:</label><br/>
-          <input type="text"></input><br/>
-
+          <input type="text" id="username" name="username" value={this.props.state.username} onChange={(ev) => this.props.onChange(ev)}></input><br/>
+          <label>Income:</label><br/>
+          <input type="text" id="income" name="income" value={this.props.state.income} onChange={(ev) => this.props.onChange(ev)}></input><br/>
           <div className="monthly-expenses-box">
             <label>Rent:</label><br/>
-            <input type="text"></input><br/>
+            <input type="text" id="rent" name="rent" value={this.state.rent} onChange={(ev) => this.onExpensesChange(ev)} onSubmit={(ev) => this.updateExpenses(ev)}></input><br/>
             <p>(If you own a home and pay mortgage, please account for this in the "Debts" section.)</p>
             <label>Utilities:</label><br/>
-            <input type="text"></input><br/>
+            <input type="text" id="utilities" name="utilities" value={this.state.utilities} onChange={(ev) => this.onExpensesChange(ev)} onSubmit={(ev) => this.updateExpenses(ev)}></input><br/>
             <label>Food/Entertainment:</label><br/>
-            <input type="text"></input><br/>
-            <label>Rent:</label><br/>
-            <input type="text"></input><br/>
+            <input type="text" id="foodEntertainment" name="foodEntertainment" value={this.state.foodEntertainment} onChange={(ev) => this.onExpensesChange(ev)} onSubmit={(ev) => this.updateExpenses(ev)}></input><br/>
+            <label>Other:</label><br/>
+            <input type="text" id="other" name="other" value={this.state.other} onChange={(ev) => this.onExpensesChange(ev)} onSubmit={(ev) => this.updateExpenses(ev)}></input><br/>
           </div>
           <br/><button onClick={(ev) => this.props.addNewDebt(ev)}>Add Debt</button><br/>
 

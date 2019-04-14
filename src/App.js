@@ -17,12 +17,13 @@ class App extends Component {
       username: "",
       debts: [],
       expenses: 0,
-      income: 0,
+      income: "",
       selectedPlan: null,
       numberOfDebts: 1
     }
     this.addNewDebt = this.addNewDebt.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
   addNewDebt(ev){
@@ -46,7 +47,41 @@ class App extends Component {
       obj['minimumPayment'] = minpay
       tempArr.push(obj)
     }
-    console.log(tempArr)
+
+    let rent = document.getElementById('rent')
+    let utilities = document.getElementById('utilities')
+    let foodEntertainment = document.getElementById('foodEntertainment')
+    let other = document.getElementById('other')
+
+    let total = (parseInt(rent.value) + parseInt(utilities.value) + parseInt(foodEntertainment.value) + parseInt(other.value))
+
+    let firstName = document.getElementById('firstName')
+    let lastName = document.getElementById('lastName')
+    let username = document.getElementById('username')
+    let income = document.getElementById('income')
+
+
+    this.setState({
+      debts: tempArr,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      username: username.value,
+      income: income,
+      expenses: total,
+      });
+
+  }
+
+  onChange(ev) {
+
+    let key = ev.target.name;
+    let value = ev.target.value;
+
+    let state = {}
+    state[key] = value
+
+    console.log('single controlled state', state)
+    this.setState(state)
   }
 
   render() {
@@ -68,7 +103,7 @@ class App extends Component {
               <Route path="/login" component={Login}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/signup" render={(props) => (
-                <SignUp {...props} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>
+                <SignUp {...props} onChange={this.onChange} state={this.state} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>
               )} />
               </div>
             </div>
