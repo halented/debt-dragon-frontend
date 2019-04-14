@@ -100,7 +100,7 @@ class App extends Component {
   }
 
   createDebt = () => {
-    this.state.debts.map(debt => {
+    this.state.debts.forEach(debt => {
       fetch("//localhost:3000/debts", {
         method: "POST",
         headers:{
