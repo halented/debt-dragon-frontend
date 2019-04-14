@@ -123,19 +123,12 @@ class App extends Component {
                 </>
               }
               <div>
-<<<<<<< HEAD
               <Route path="/login" component={Login}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/signup" render={(props) => (
                 <SignUp {...props} onChange={this.onChange} state={this.state} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts}/>
               )} />
-=======
-                <Route path="/login" component={Login} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/signup" render={(props) => (
-                  <SignUp {...props} debts={this.state.debts} addNewDebt={this.addNewDebt} handleSubmit={this.handleSubmit} numberOfDebts={this.state.numberOfDebts} />
-                )} />
->>>>>>> ee5f03f6a8312bd51402b1b7b937f0685c638e0f
+
               </div>
             </div>
           </Router>
